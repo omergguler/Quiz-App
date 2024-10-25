@@ -1,0 +1,122 @@
+﻿@page
+@model IndexModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="~/css/Index.css" />
+</head>
+<body>
+
+    <div id="firstModal" class="modal">
+        <div class="modal-content">
+            <h4>You are not verified yet</h4>
+            <h6>Hello, please verify your email adress by entering the 6-digit code we sent to <b>@Model.userEmail</b></h6>
+            <form asp-page-handler="Verify" method="post" id="loginForm">
+                <div class="digit-container">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="first">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="second">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="third">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="fourth">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="fifth">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="sixth">
+                    <input type="hidden" value="@Model.userEmail" name="email" />
+                </div>
+                @if (Model.wrongDigits)
+                {
+                    <p>Incorrect code, please try again</p>
+                }
+                @if (Model.resend)
+                {
+                    <p>We sent the code again, please check your inbox.</p>
+                }
+                <button class="btn btn-primary" type="submit">Verify</button>
+                
+                
+            </form>
+            <form asp-page-handler="Resend" method="post">
+                <p>Didn't receive an email? <button type="submit" class="button">Resend email</button></p>
+                <input type="hidden" value="@Model.userEmail" name="email" />
+            </form>
+        </div>
+    </div>
+
+
+    <div class="container-all">
+        <div class="index-page-text">
+            <p class="index-title">QuizApp</p>
+            <p class="index-description">Start creating your quizzes and share <br /> with your friends!</p>
+
+           
+        </div>
+        <div class="login-form-container">
+            <form method="post" asp-page-handler="Login">
+                <div class="login-form-items-container form">
+
+                    <input class="login-form-item input form-control" type="text" name="login-username-email" placeholder="Username or email" required/>
+                    <input class="login-form-item form-control" type="password" name="login-password" placeholder="Password" required />
+                    <button class="login-form-item btn btn-success" type="submit">Login</button>
+                    <p style="font-size: 20px; margin-top: 10px;">Don't have an account? <a href="/register">Create a new account</a></p>
+                    @if (Model.errorMessage.Length > 0)
+                    {
+                        <p>@Model.errorMessage</p>
+                    }
+                    @if (Model.successMessage.Length > 0)
+                    {
+                        <p>@Model.successMessage</p>
+                    }
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+
+    
+
+    <script>
+        const inputs = document.querySelectorAll('.digit-container input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && input.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        var firstModal = document.getElementById("firstModal");
+        var confirmed = "@Model.confirmed".toString().toLowerCase();
+        if (confirmed === "false") {
+            firstModal.style.display = "flex";
+        }
+    </script>
+
+    <script>
+        if (window.location.search.indexOf("?handler=Login") !== -1) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        if (window.location.search.indexOf("?handler=Verify") !== -1) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        if (window.location.search.indexOf("?handler=Resend") !== -1) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
+    
+</body>
+</html>

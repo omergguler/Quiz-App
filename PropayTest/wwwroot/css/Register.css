@@ -1,0 +1,143 @@
+﻿body {
+    background-color: white;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.register-form-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divider {
+    background-color: dimgray;
+    width: 100%;
+    height: 3px;
+    margin: 20px;
+}
+
+p{
+    margin-bottom: 0;
+}
+
+.title-container {
+    align-self: start;
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
+.register-form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.register-form-item {
+    margin: 10px;
+    font-size: 30px;
+    width: 90%;
+}
+
+.form {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.reg-btn {
+    width: 250px;
+}
+
+@keyframes popUp {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal {
+    display: none;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    animation: popUp 0.2s ease-in-out;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 500px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content h6 {
+    margin: 20px 10px;
+    text-align: center;
+    line-height: 2;
+    margin-bottom: 0;
+}
+
+.modal-content form {
+    width: 400px;
+    text-align: center;
+    margin: 0;
+}
+
+.digit-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px auto;
+}
+
+    .digit-container input {
+        width: 35px;
+        height: 50px;
+        text-align: center;
+        font-size: 24px;
+        border: none;
+        border-bottom: 2px solid #000;
+        margin: 0 5px;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .digit-container input:focus {
+            outline: none;
+            border-bottom-color: #007bff;
+        }
+
+.modal-content .btn {
+    margin-top: 20px;
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+p .button {
+    background-color: transparent;
+    border: none;
+    font-weight: 500;
+    color: #0000EE;
+}
+
+    p .button:hover {
+        background-color: transparent;
+        text-decoration: underline;
+    }

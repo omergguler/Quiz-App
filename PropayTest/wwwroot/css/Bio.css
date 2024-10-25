@@ -1,0 +1,218 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #fff;
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: rgba(0,0,0,0.6);
+}
+
+.profile-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+.profile-page {
+    padding-top: 0;
+}
+
+    .profile-page .content-top-performer {
+        display: flex;
+        flex-direction: column;
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+        margin: auto;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 2rem;
+        padding-bottom: 20px;
+    }
+
+    .profile-page .content {
+        display: flex;
+        flex-direction: column;
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+        margin: auto;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 2rem;
+        box-shadow: 0 15px 35px rgba(50,50,93,0.1), 0 5px 15px rgba(0,0,0,0.07);
+        padding-bottom: 20px;
+    }
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.content-top-performer::after, .content-top-performer::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 2rem;
+    animation: 3s spin linear infinite;
+}
+
+.content-top-performer::before {
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+.profile-page .content__cover {
+    position: relative;
+    background: linear-gradient(150deg, #1d8cf8 20%, #3358f4 100%);
+}
+
+.avatar {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    background: #8f6ed5 url("../icons/user.png") center center no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+
+.profile-page .content__title {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+    .profile-page .content__title h1 {
+        margin-bottom: 0.1rem;
+        font-size: 2.4rem;
+    }
+
+.profile-page .content__description {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+    .profile-page .content__description p {
+        margin-bottom: 0.2rem;
+        font-size: 1.2rem;
+    }
+
+.profile-page .content__list {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    list-style-type: none;
+    padding: 0;
+}
+
+    .profile-page .content__list li {
+        padding: 0 1.5rem;
+        text-align: center;
+        font-size: 1rem;
+        width: 150px;
+    }
+
+        .profile-page .content__list li span {
+            display: block;
+            margin-bottom: 0.1rem;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+.profile-page .content__button {
+    margin: 1rem 0 2rem;
+    text-align: center;
+}
+
+    .profile-page .content__button .button {
+        display: inline-block;
+        padding: 1.2rem 1.8rem;
+        text-align: center;
+        text-decoration: none;
+        background: linear-gradient(100deg, #1d8cf8 30%, #3358f4 100%);
+        border-radius: 2rem;
+        box-shadow: 0 4px 6px rgba(50,50,93,0.11), 0 1px 3px rgba(0,0,0,0.08);
+        font-size: 1rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+.button__text {
+    margin: 0;
+}
+
+.settings {
+    position: absolute;
+    width: 40px;
+    margin-left: 87%;
+}
+
+.settings:hover {
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    animation: popUp 0.2s ease-in-out;
+    min-width: 350px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    padding: 4px;
+}
+
+.modal-content .item {
+    padding: 10px 0;
+    border: none;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+    .modal-content .item:hover {
+        background-color: #CFCFCE;
+    }
+
+@keyframes popUp {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#signOutForm {
+    position: absolute;
+    visibility: hidden;
+}

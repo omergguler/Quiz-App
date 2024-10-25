@@ -1,0 +1,132 @@
+﻿@page "/register"
+@model PropayTest.Pages.Register.RegisterModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="~/css/Register.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+    <div id="firstModal" class="modal">
+        <div class="modal-content" id="verificationModal">
+            <h4>Verify Your Email</h4>
+            <h6>Hello @Model.firstName, please verify your email adress by entering the 6-digit code we sent to <b>@Model.user.Email</b></h6>
+            <form asp-page-handler="Verify">
+                <div class="digit-container">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="first">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="second">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="third">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="fourth">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="fifth">
+                    <input type="text" maxlength="1" pattern="[0-9]" required name="sixth">
+                    <input type="hidden" value="@Model.user.Email" name="email" />
+                </div>
+                @if (Model.wrongDigits)
+                {
+                    <p>Incorrect code, please try again</p>
+                }
+                @if (Model.resend)
+                {
+                    <p>We sent the code again, please check your inbox.</p>
+                }
+
+                <button class="btn btn-primary" type="submit">Verify</button>
+            </form>
+            <form asp-page-handler="Resend">
+                <p>Didn't receive an email? <button type="submit" class="button">Resend email</button></p>
+                <input type="hidden" value="@Model.user.Email" name="email" />
+            </form>
+        </div>
+    </div>
+
+    <div class="register-form-container">
+        <form method="post" asp-page-handler="Register">
+            <div class="register-form-container form">
+
+                <div class="title-container">
+                    <p style="font-size: 40px;">Register</p>
+                </div>
+                <div class="divider"></div>
+                <div class="register-form-row">
+                    <input class="register-form-item input form-control" type="text" name="register-username" placeholder="Username" required />
+                    <input class="register-form-item input form-control" type="text" name="register-email" placeholder="Email" required />
+                </div>
+                <div class="register-form-row">
+                    <input class="register-form-item input form-control" type="text" name="register-name" placeholder="Name" required />
+                    <input class="register-form-item input form-control" type="text" name="register-surname" placeholder="Surname" required />
+                </div>
+                <div class="register-form-row">
+                    <input class="register-form-item form-control" type="password" name="register-newPassword" placeholder="New Password" required />
+                    <input class="register-form-item form-control" type="password" name="register-confirmPassword" placeholder="Confirm Password" required />
+                </div>
+
+                <button class="register-form-item reg-btn btn btn-success" type="submit">Register</button>
+                @if (Model.successMessage.Length > 0)
+                {
+                    <p>@Model.successMessage</p>
+                }
+                @if (Model.errorMessage.Length > 0)
+                {
+                    <p>@Model.errorMessage</p>
+                }
+                <p>Already have an account? <a href="/">Log in</a></p>
+
+            </div>
+        </form>
+    </div>
+
+    <script>
+        if (window.location.search.indexOf("?handler=Register") !== -1) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        if (window.location.search.indexOf("?handler=Verify") !== -1) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        if (window.location.search.indexOf("?handler=Resend") !== -1) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
+
+    <script>
+        var firstModal = document.getElementById("firstModal");
+        var confirmed = "@Model.confirmed".toString().toLowerCase();
+
+        var wrongDigits = "@Model.wrongDigits".toString().toLowerCase();
+        if (confirmed === "false" && wrongDigits === "true") {
+            document.querySelector("#verificationModal").style.animation = "none";
+            firstModal.style.display = "flex";
+            console.log("yanlis cevapladin");
+        }
+        if (confirmed === "false" && wrongDigits === "false") {
+            firstModal.style.display = "flex";
+            console.log("ilk kez yapacaksin");
+        }
+    </script>
+
+    <script>
+        const inputs = document.querySelectorAll('.digit-container input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && input.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

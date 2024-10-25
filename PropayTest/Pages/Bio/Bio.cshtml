@@ -1,0 +1,85 @@
+﻿@page "/bio"
+@model PropayTest.Pages.Bio.BioModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bio</title>
+    <link rel="stylesheet" href="./css/Bio.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    @if (Model.User != null)
+    {
+        <div class="profile-page">
+            <form method="post" asp-page-handler="SignOut" id="signOutForm"></form>
+        <div id="firstModal" class="modal">
+            <div class="modal-content">
+                <button class="item">
+                    Change Password
+                </button>
+                <button class="item" id="logOutBtn">
+                    Log Out
+                </button>
+
+            </div>
+        </div>
+     
+
+        <div class="content">
+            <img class="settings" src="~/icons/settings.png" />
+            <div class="avatar">
+            </div>
+
+            <div class="content__title">
+                <h5>Top Performer #@Model.rank</h5>
+                <h1>
+                    @Model.User.FullName
+                </h1><span>@@</span><span>@Model.User.UserName</span>
+            </div>
+            <ul class="content__list">
+                <li><span>@Model.questionCount</span>Questions</li>
+                <li><span>@Model.quizCount</span>Quizzes</li>
+                <li><span>%@Model.weight</span>Performance</li>
+            </ul>
+        </div>
+
+
+        </div>
+    }
+    else
+    {
+        <p>User not found or you are not authorized to view this profile.</p>
+    }
+
+    <script>
+        var logOutForm = document.getElementById("signOutForm");
+        var content = document.getElementsByClassName("content")[0];
+        var settingsBtn = document.getElementsByClassName("settings")[0];
+        var firstModal = document.getElementById("firstModal");
+        var logOutBtn = document.getElementById("logOutBtn");
+        
+        settingsBtn.addEventListener('click', function () {
+            firstModal.style.display = "flex";
+        });
+        window.onclick = function (event) {
+            if (event.target == firstModal) {
+                firstModal.style.display = "none";
+            }
+        }
+        if (@Model.rank < 4 && @Model.rank !== 0) {
+            content.classList.remove("content");
+            content.classList.add("content-top-performer");
+        }
+        logOutBtn.addEventListener('click', function () {
+            console.log("log out pressed");
+            logOutForm.submit();
+        });
+    </script>
+</body>
+</html>

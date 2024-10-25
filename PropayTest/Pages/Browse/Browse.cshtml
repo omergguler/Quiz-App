@@ -1,0 +1,59 @@
+﻿@page "/browse"
+@model PropayTest.Pages.Browse.BrowseModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="~/css/Browse.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</head>
+
+
+<body>
+    <a href="/profile" class="nav-link">Go Back To Profile</a>
+    <form id="takeQuizForm" method="post" asp-page-handler="TakeQuiz" style="position:absolute;">
+        <input type="hidden" id="selectedQuiz" name="SelectedQuizId" style="position:absolute;">
+    </form>
+    <h1>All Quizzes - @Model.QuizzesUsers.Count Total</h1>
+    <div class="list-container">
+        <div class="scroll-list">
+            @foreach (var quiz in Model.QuizzesUsers)
+            {
+                <div class="scroll-item" data-id="@quiz.QuizId">
+                    <div>
+                        <h2>@quiz.Title</h2>
+                        <h4>@quiz.Description</h4>
+                        <h5>Created by: @quiz.FullName</h5>
+                        <h5>at: @quiz.CreatedDate</h5>
+                        <h5>Quiz ID: @quiz.QuizId</h5>
+                    </div>
+
+                    <div>
+                        <button style="border-radius: 20px;" onclick="takeQuiz(@quiz.QuizId)">
+                            <h2>Take quiz</h2>
+                        </button>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+    <script>
+        function takeQuiz(quizId) {
+            document.getElementById("selectedQuiz").value = quizId;
+            document.getElementById("takeQuizForm").submit();
+        }
+    </script>
+</body>
+
+</html>
